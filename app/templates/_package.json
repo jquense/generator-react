@@ -1,0 +1,53 @@
+{
+  "name": "<%= slugname %>",
+  "version": "0.3.0",
+  "description": "<%= props.description %>",
+  "author": {
+    "name": "Jason Quense",
+    "email": "monastic.panic@gmail.com"
+  },
+  "repository": "<%= repoUrl %>",
+  "license": "MIT",
+  "keywords": [
+    "<%= slugname %>",
+    "react-component"<% for (var i = 0; i < keywords.length; i++) { %>,
+    "<%= keywords[i] %>"<% } %>
+  ],
+  "scripts": {
+    "test": "karma start --single-run"
+  },
+
+  "dependencies": {
+    "react": "^0.12.2"
+  },
+
+  "devDependencies": {
+    "6to5": "^3.0.14",
+    "6to5-loader": "^3.0.0",
+    "gulp-6to5": "^3.0.0",
+
+    "chai": "^1.10.0",
+    "rimraf": "^2.2.8",
+    "chai-as-promised": "^4.1.1",
+
+    "gulp": "^3.8.10",
+    "gulp-less": "^2.0.1",
+    "gulp-plumber": "^0.6.6",
+
+    "karma": "~0.12.23",
+    "karma-mocha": "~0.1.9",
+    "karma-phantomjs-launcher": "~0.1.4",
+    "karma-sourcemap-loader": "^0.3.2",
+    "karma-webpack": "~1.2.2",
+    "mocha": "~1.21.4",
+    "phantomjs": "~1.9.10",
+    "sinon": "^1.12.2",
+    "sinon-chai": "^2.6.0",
+    "imports-loader": "^0.6.3",
+    "css-loader": "^0.9.1",
+    "style-loader": "^0.8.3",
+    "less-loader": "^2.0.0",
+    "webpack": "^1.4.15",
+    "webpack-dev-server": "^1.7.0"
+  }
+}

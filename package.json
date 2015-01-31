@@ -1,0 +1,38 @@
+{
+  "name": "generator-react",
+  "version": "0.0.0",
+  "description": "Yeoman generator",
+  "license": "MIT",
+  "main": "app/index.js",
+  "repository": "jquense/generator-react",
+  "author": {
+    "name": "Jason Quense",
+    "email": "monastic.panic@gmail.com",
+    "url": "https://github.com/jquense"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "files": [
+    "app"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "chalk": "^0.5.0",
+    "core-js": "^0.4.6",
+    "npm-name": "^1.0.3",
+    "yeoman-generator": "^0.17.0",
+    "yosay": "^0.3.0"
+  },
+  "devDependencies": {
+    "mocha": "*"
+  },
+  "peerDependencies": {
+    "yo": ">=1.0.0"
+  }
+}
