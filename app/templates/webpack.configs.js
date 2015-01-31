@@ -28,7 +28,11 @@ module.exports = {
       filename: 'bundle.js',
       path: __dirname
     },
-    
+
+    resolve: {
+      extensions: ['', '.js', '.jsx']
+    },
+
     module: {
       loaders: [
         { test: /\.css$/,  loader: "style-loader!css-loader" },
@@ -46,6 +50,9 @@ module.exports = {
   test: {
     devtool: 'inline-source-map',
     cache: true,
+    resolve: {
+      extensions: ['', '.js', '.jsx']
+    },
     module: {
       loaders: [
         { test: /\.css$/, loader: "style-loader!css-loader" },

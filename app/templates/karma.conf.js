@@ -8,12 +8,12 @@ module.exports = function (config) {
 
     frameworks: ['mocha'],
 
+    reporters: ['mocha'],
+
     files: [
       'vendor/sinon-1.10.3.js', //because sinon hates webpack
       'test.js'
     ],
-
-    reporters: ['progress'],
 
     port: 9876,
     colors: true,
@@ -32,13 +32,7 @@ module.exports = function (config) {
 
     webpackServer: {
       noInfo: true
-    },
+    }
 
-    plugins: [
-      require("karma-sourcemap-loader"),
-      require("karma-phantomjs-launcher"),
-      require("karma-webpack"),
-      require("karma-mocha")
-    ]
   });
 };
