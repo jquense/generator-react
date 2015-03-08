@@ -75,19 +75,16 @@ var ReactGenerator = yeoman.generators.Base.extend({
       else 
         this.keywords = [];
       
-      console.log(this.keywords)
-
       this.props = props
 
       cb()
     }.bind(this))
   },
 
-
   writing: {
 
     app: function () {
-      this.config.save()
+      //this.config.save()
 
       this.mkdir('lib')
       this.mkdir('src')
@@ -106,7 +103,7 @@ var ReactGenerator = yeoman.generators.Base.extend({
 
     projectfiles: function () {
       this.template('README.md', 'README.md')
-      this.copy('jshintrc', '.jshintrc')
+      this.copy('eslintrc', '.eslintrc')
 
       this.copy('License.txt', 'License.txt')
       this.copy('gulpfile.js', 'gulpfile.js')

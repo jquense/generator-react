@@ -1,52 +1,55 @@
 'use strict';
-var gulp = require('gulp')
-  , less = require('gulp-less')
-  , toFive = require("gulp-6to5")
+var gulp    = require('gulp')
+  , less    = require('gulp-less')
   , rimraf  = require('rimraf')
   , plumber = require('gulp-plumber')
   , configs = require('./webpack.configs')
-
+  , babelTransform = require('gulp-babel-helpers')
   , WebpackDevServer = require("webpack-dev-server")
-  , webpack = require('webpack');
+  , path = require('path');
 
-gulp.task('watch-less',  function(){
-  gulp.src('./src/styles.less')
-      .pipe(plumber())
-      .pipe(less({ compress: false }))
-      .pipe(gulp.dest('./dev/css'));
+
+gulp.task('clean', function(cb){
+  rimraf('./lib', cb);
 })
 
-gulp.task('less', function(){
+gulp.task('less-compile', ['clean'], function(){
   gulp.src('./src/less/styles.less')
       .pipe(plumber())
       .pipe(less({ compress: true }))
-      .pipe(gulp.dest('./lib/css'));
+      .pipe(gulp.dest('./lib/styles'));
 })
 
-gulp.task('clean', function(cb){
-  rimraf('./folder', cb);
+gulp.task('less-copy', ['clean'], function(){
+  return gulp.src('./src/less/*.less')
+    .pipe(gulp.dest('./lib/styles'))
 })
 
-gulp.task('build', ['clean'], function(){
-  gulp.src('./src/*.less')
-    .pipe(gulp.dest('./lib/less'))
+gulp.task('transpile', ['clean'], function(){
 
   return gulp.src(['./src/**/*.jsx', './src/**/*.js'])
       .pipe(plumber())
-      .pipe(toFive(configs.to5Config))
+      .pipe(babelTransform(
+          configs.babel
+        , './util/babelHelpers.js'
+        , './lib/util/babelHelpers.js'))
       .pipe(gulp.dest('./lib'));
 })
 
 gulp.task('dev', function() {
 
-  gulp.watch('./src/*.less',  ['watch-less']);
-  
   new WebpackDevServer(webpack(configs.dev), {
     publicPath: "/dev",
+    hot: true,
     stats: { colors: true }
-  }).listen(8080, "localhost");
+  })
+  .listen(8080, 'localhost', function (err, result) {
+    if (err) 
+      return console.log(err);
+    
+    console.log('Listening at localhost:3000');
+  });
+
 })
 
-
-
-gulp.task('release', ['clean', 'build', 'less'])
+gulp.task('release', ['clean', 'less-compile', 'less-copy', 'transpile'])

@@ -1,3 +1,4 @@
+var webpack = require('webpack');
 
 var config = {
       experimental: true,
@@ -5,46 +6,63 @@ var config = {
 
       whitelist: [
         'es6.classes',
-        'es6.modules',
+        'es6.modules',      //needed for something....
+        'es6.blockScoping', //needed for classes
         'es6.arrowFunctions',
         'es6.properties.computed',
         'es6.properties.shorthand',
         'es6.parameters.default',
         'es6.parameters.rest',
         'es6.templateLiterals',
-        'es7.objectSpread',
+        'es7.objectRestSpread',
         'react'
       ]
     }
 
+var loaders = [
+      { test: /\.css$/,  loader: "style-loader!css-loader" },
+      { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
+      { 
+        test: /\.jsx$|\.js$/, 
+        loader: 'babel-loader', 
+        exclude: /node_modules/,
+        query: config
+      }
+    ];
+
+
 module.exports = {
 
-  to5Config: config,
+  babel: config,
 
   dev: {
     devtool: 'source-map',
-    entry: './dev/dev.jsx',
+    
+    cache: true,
+
+    entry: [
+      'webpack-dev-server/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      './dev/dev.jsx'
+    ],
+
     output: {
       filename: 'bundle.js',
       path: __dirname
     },
+
+    plugins: [
+      new webpack.HotModuleReplacementPlugin(),
+      new webpack.NoErrorsPlugin()
+    ],
 
     resolve: {
       extensions: ['', '.js', '.jsx']
     },
 
     module: {
-      loaders: [
-        { test: /\.css$/,  loader: "style-loader!css-loader" },
-        { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
-        { 
-          test: /\.jsx$|\.js$/, 
-          loader: '6to5-loader', 
-          exclude: /node_modules/,
-          query: config
-        }
-      ]
-    },
+      loaders: loadersWithHotModule(),
+    }
   },
 
   test: {
@@ -54,17 +72,17 @@ module.exports = {
       extensions: ['', '.js', '.jsx']
     },
     module: {
-      loaders: [
-        { test: /\.css$/, loader: "style-loader!css-loader" },
-        { test: /\.less$/, loader: "style-loader!css-loader!less-loader" },
-        { test: /sinon-chai/, loader: "imports?define=>false" },
-        { 
-          test: /\.jsx$|\.js$/, 
-          loader: '6to5-loader', 
-          exclude: /node_modules/,
-          query: config
-        }
-      ]
-    },
+      loaders: loaders.concat(
+        { test: /sinon-chai/, loader: "imports?define=>false" })
+    }
   }
+}
+
+function loadersWithHotModule(){
+  return loaders.reduce(function (current, next, idx){
+      if(next.loader === 'babel-loader')
+        current.push({ test: /\.jsx$|\.js$/, loader: 'react-hot-loader', exclude: /node_modules/ }) 
+
+      return current.concat(next);
+  }, [])
 }

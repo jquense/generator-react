@@ -17,37 +17,43 @@
     "test": "karma start --single-run"
   },
 
-  "dependencies": {
+  "peerDependencies": {
     "react": "^0.12.2"
   },
 
   "devDependencies": {
-    "6to5": "^3.0.14",
-    "6to5-loader": "^3.0.0",
-    "gulp-6to5": "^3.0.0",
+    "babel": "^4.7.2",
+    "babel-loader": "^4.0.0",
 
-    "chai": "^1.10.0",
     "rimraf": "^2.2.8",
-    "chai-as-promised": "^4.1.1",
 
     "gulp": "^3.8.10",
     "gulp-less": "^2.0.1",
+    "gulp-babel-helpers": "^1.0.2",
     "gulp-plumber": "^0.6.6",
-
+    "gulp-rename": "^1.2.0",
+    
     "karma": "~0.12.23",
     "karma-mocha": "~0.1.9",
     "karma-mocha-reporter": "^0.3.1",
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-sourcemap-loader": "^0.3.2",
     "karma-webpack": "~1.2.2",
+
     "mocha": "~1.21.4",
+    "chai": "^1.10.0",
+    "sinon-chai": "^2.6.0",
+    "chai-as-promised": "^4.1.1",
     "phantomjs": "~1.9.10",
 
-    "sinon-chai": "^2.6.0",
     "imports-loader": "^0.6.3",
     "css-loader": "^0.9.1",
     "style-loader": "^0.8.3",
     "less-loader": "^2.0.0",
+
+    "react": "^0.12.2",
+    "react-hot-loader": "^1.1.7",
+
     "webpack": "^1.4.15",
     "webpack-dev-server": "^1.7.0"
   }
