@@ -57,7 +57,6 @@ var ReactGenerator = yeoman.generators.Base.extend({
     prompts = [{
       name: 'description', 
       message: 'Description', 
-      default: 'The best module ever.'
     },
     {
       name: 'keywords', 
@@ -104,6 +103,7 @@ var ReactGenerator = yeoman.generators.Base.extend({
     projectfiles: function () {
       this.template('README.md', 'README.md')
       this.copy('eslintrc', '.eslintrc')
+      this.copy('npmignore', '.npmignore')
 
       this.copy('License.txt', 'License.txt')
       this.copy('gulpfile.js', 'gulpfile.js')

@@ -5,6 +5,7 @@ var gulp    = require('gulp')
   , plumber = require('gulp-plumber')
   , configs = require('./webpack.configs')
   , babelTransform = require('gulp-babel-helpers')
+  , webpack = require('webpack')
   , WebpackDevServer = require("webpack-dev-server")
   , path = require('path');
 
@@ -47,7 +48,7 @@ gulp.task('dev', function() {
     if (err) 
       return console.log(err);
     
-    console.log('Listening at localhost:3000');
+    console.log('Listening at localhost:8080');
   });
 
 })
