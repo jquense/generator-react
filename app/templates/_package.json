@@ -8,6 +8,7 @@
   },
   "repository": "<%= repoUrl %>",
   "license": "MIT",
+  "main": "lib/index.js",
   "keywords": [
     "<%= slugname %>",
     "react-component"<% for (var i = 0; i < keywords.length; i++) { %>,
@@ -17,6 +18,27 @@
     "test": "karma start --single-run"
   },
 
+  "babel": {
+    "experimental": true,
+    "playground": true,
+    "loose": ["all"],
+
+    "whitelist": [
+      "es6.classes",
+      "es6.modules", 
+      "es6.blockScoping",
+      "es6.arrowFunctions",
+      "es6.spread",
+      "es6.properties.computed",
+      "es6.properties.shorthand",
+      "es6.parameters.default",
+      "es6.parameters.rest",
+      "es6.templateLiterals",
+      "es7.objectRestSpread",
+      "react"
+    ]
+  },
+  
   "peerDependencies": {
     "react": "^0.12.2"
   },

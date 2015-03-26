@@ -33,6 +33,12 @@ var ReactGenerator = yeoman.generators.Base.extend({
           done(!available)
         })
       }
+    },
+    {
+      type: 'confirm',
+      name: 'includeStyles',
+      message: 'Do you want to include styles in this module?',
+      default: true,
     }];
 
     this.prompt(prompts, function (props) {
@@ -88,11 +94,13 @@ var ReactGenerator = yeoman.generators.Base.extend({
       this.mkdir('lib')
       this.mkdir('src')
       this.mkdir('src/util')
-      this.mkdir('src/mixins')
-      this.mkdir('src/less')
-      this.write('src/less/styles.less', '')
 
-      this.write('index.js', '')
+      if ( this.props.includeStyles ) {
+        this.mkdir('src/less')
+        this.write('src/less/styles.less', '')
+      }
+
+      this.write('src/index.js', '')
 
       this.mkdir('test')
       this.copy('test.js', 'test.js')
@@ -106,11 +114,12 @@ var ReactGenerator = yeoman.generators.Base.extend({
       this.copy('npmignore', '.npmignore')
 
       this.copy('License.txt', 'License.txt')
-      this.copy('gulpfile.js', 'gulpfile.js')
+      this.template('gulpfile.js', 'gulpfile.js')
       this.copy('karma.conf.js', 'karma.conf.js')
       this.copy('webpack.configs.js', 'webpack.configs.js')
 
       this.directory('dev', 'dev')
+      this.template('dev/dev.jsx', 'dev/dev.jsx')
       this.directory('vendor', 'vendor')
     }
   },

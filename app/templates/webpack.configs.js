@@ -1,23 +1,6 @@
 var webpack = require('webpack');
-
-var config = {
-      experimental: true,
-      loose: ['all'],
-
-      whitelist: [
-        'es6.classes',
-        'es6.modules',      //needed for something....
-        'es6.blockScoping', //needed for classes
-        'es6.arrowFunctions',
-        'es6.properties.computed',
-        'es6.properties.shorthand',
-        'es6.parameters.default',
-        'es6.parameters.rest',
-        'es6.templateLiterals',
-        'es7.objectRestSpread',
-        'react'
-      ]
-    }
+var pkg = require('./package.json')
+var config = pkg.babel
 
 var loaders = [
       { test: /\.css$/,  loader: "style-loader!css-loader" },
@@ -32,8 +15,6 @@ var loaders = [
 
 
 module.exports = {
-
-  babel: config,
 
   dev: {
     devtool: 'source-map',
