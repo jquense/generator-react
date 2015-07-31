@@ -33,12 +33,6 @@ var ReactGenerator = yeoman.generators.Base.extend({
           done(!available)
         })
       }
-    },
-    {
-      type: 'confirm',
-      name: 'includeStyles',
-      message: 'Do you want to include styles in this module?',
-      default: true,
     }];
 
     this.prompt(prompts, function (props) {
@@ -61,6 +55,12 @@ var ReactGenerator = yeoman.generators.Base.extend({
       , prompts
 
     prompts = [{
+      type: 'confirm',
+      name: 'includeStyles',
+      message: 'Do you want to include styles in this module?',
+      default: true,
+    },
+    {
       name: 'description', 
       message: 'Description', 
     },
@@ -111,6 +111,8 @@ var ReactGenerator = yeoman.generators.Base.extend({
     projectfiles: function () {
       this.template('README.md', 'README.md')
       this.copy('eslintrc', '.eslintrc')
+      this.copy('babelrc', '.babelrc')
+      //this.copy('gitignore', '.gitignore')
       this.copy('npmignore', '.npmignore')
 
       this.copy('License.txt', 'License.txt')

@@ -3,9 +3,9 @@ var gulp    = require('gulp')<% if ( props.includeStyles ) { %>
   , less    = require('gulp-less')<% } %>
   , rimraf  = require('rimraf')
   , plumber = require('gulp-plumber')
-  , babel   = require('./package.json').babel
+  , rename  = require('gulp-rename')
   , configs = require('./webpack.configs')
-  , babelTransform = require('gulp-babel-helpers')
+  , babel   = require('gulp-babel-helpers')
   , webpack = require('webpack')
   , WebpackDevServer = require("webpack-dev-server");
 
@@ -15,31 +15,28 @@ gulp.task('clean', function(cb){
 })
 
 <% if ( props.includeStyles ) { %>
-  gulp.task('less-compile', ['clean'], function(){
-    gulp.src('./src/less/styles.less')
-        .pipe(plumber())
-        .pipe(less({ compress: true }))
-        .pipe(gulp.dest('./lib/styles'));
-  })
-
-  gulp.task('less-copy', ['clean'], function(){
-    return gulp.src('./src/less/*.less')
-      .pipe(gulp.dest('./lib/styles'))
-  })
-<% } %>
-
-gulp.task('transpile', ['clean'], function(){
-
-  return gulp.src(['./src/**/*.jsx', './src/**/*.js'])
+gulp.task('less-compile', ['clean'], function(){
+  gulp.src('./src/less/styles.less')
       .pipe(plumber())
-      .pipe(babelTransform(
-          babel
-        , './util/babelHelpers.js'
-        , './lib/util/babelHelpers.js'))
-      .pipe(gulp.dest('./lib'));
+      .pipe(less({ compress: true }))
+      .pipe(gulp.dest('./lib/styles'));
 })
 
-gulp.task('dev', function() {
+gulp.task('less-copy', ['clean'], function(){
+  return gulp.src('./src/less/*.less')
+    .pipe(gulp.dest('./lib/styles'))
+})
+<% } %>
+
+gulp.task('build', ['clean'], function(){
+  return gulp.src(['./src/**/*.jsx', './src/**/*.js'])
+      .pipe(plumber())
+      .pipe(babel('./util/babelHelpers.js'))
+      .pipe(rename({ extname: '.js' }))
+      .pipe(gulp.dest('./lib'))
+})
+
+gulp.task('dev', function(cb) {
 
   new WebpackDevServer(webpack(configs.dev), {
     publicPath: "/dev",
@@ -47,12 +44,12 @@ gulp.task('dev', function() {
     stats: { colors: true }
   })
   .listen(8080, 'localhost', function (err, result) {
-    if (err) 
-      return console.log(err);
-    
+    if (err) return cb(err);
     console.log('Listening at localhost:8080');
   });
 
 })
 
-gulp.task('release', ['clean',<% if ( props.includeStyles ) { %> 'less-compile', 'less-copy', <% } %> 'transpile'])
+gulp.task('release', ['clean', <% if ( props.includeStyles ) { %> 'less-compile', 'less-copy', <% } %> 'build'])
+
+gulp.task('publish', ['release'], require('jq-release'))

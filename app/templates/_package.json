@@ -14,44 +14,31 @@
     "react-component"<% for (var i = 0; i < keywords.length; i++) { %>,
     "<%= keywords[i] %>"<% } %>
   ],
+
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "karma start --single-run",
+    "test-watch": "karma start",
+    <% if ( props.includeStyles ) { %>
+    "less": "gulp less-compile less-copy",
+    <% } %>
+    "clean": "gulp clean",
+    "build": "gulp build"
   },
 
-  "babel": {
-    "experimental": true,
-    "playground": true,
-    "loose": ["all"],
-
-    "whitelist": [
-      "es6.classes",
-      "es6.modules", 
-      "es6.blockScoping",
-      "es6.arrowFunctions",
-      "es6.spread",
-      "es6.properties.computed",
-      "es6.properties.shorthand",
-      "es6.parameters.default",
-      "es6.parameters.rest",
-      "es6.templateLiterals",
-      "es7.objectRestSpread",
-      "react"
-    ]
-  },
-  
   "peerDependencies": {
-    "react": "^0.12.2"
+    "react": ">=0.13.0"
   },
 
   "devDependencies": {
-    "babel": "^4.7.2",
-    "babel-loader": "^4.0.0",
+    "jq-release": "*",
 
     "rimraf": "^2.2.8",
+    "merge-stream": "^0.1.7",
+    "babel-plugin-object-assign": "^1.1.0",
 
     "gulp": "^3.8.10",
     "gulp-less": "^2.0.1",
-    "gulp-babel-helpers": "^1.1.2",
+    "gulp-babel-helpers": "^2.1.0",
     "gulp-plumber": "^0.6.6",
     "gulp-rename": "^1.2.0",
     
@@ -60,7 +47,7 @@
     "karma-mocha-reporter": "^0.3.1",
     "karma-phantomjs-launcher": "~0.1.4",
     "karma-sourcemap-loader": "^0.3.2",
-    "karma-webpack": "~1.2.2",
+    "karma-webpack": "^1.2.2",
 
     "mocha": "~1.21.4",
     "chai": "^1.10.0",
@@ -68,15 +55,21 @@
     "chai-as-promised": "^4.1.1",
     "phantomjs": "~1.9.10",
 
+    "webpack": "^1.7.0",
+    "webpack-dev-server": "^1.7.0",
+
+    "babel-loader": "^5.0.0",
     "imports-loader": "^0.6.3",
     "css-loader": "^0.9.1",
     "style-loader": "^0.8.3",
     "less-loader": "^2.0.0",
+    "url-loader": "^0.5.5",
+    "file-loader": "^0.8.1",
+    "raw-loader": "^0.5.1",
+    "json-loader": "^0.5.1",
 
-    "react": "^0.12.2",
-    "react-hot-loader": "^1.1.7",
-
-    "webpack": "^1.4.15",
-    "webpack-dev-server": "^1.7.0"
+    "react": "^0.13.3",
+    "react-testutil-query": "*",
+    "react-hot-loader": "^1.2.0"
   }
 }

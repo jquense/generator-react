@@ -5,6 +5,6 @@
 ## Install
 
 ```sh
-npm i -S <%= slugname %>
+npm install --save <%= slugname %>
 ```
 
